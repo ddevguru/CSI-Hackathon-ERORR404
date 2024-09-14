@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Peer Mentoring Platform</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='index.css') }}">
+</head>
+<body>
+  <header>
+    <h1>Peer Mentoring Platform</h1>
+    <nav>
+      <ul>
+        <li><a href="#">Home</a></li>
+        <li><a href="#">About Us</a></li>
+        <li><a href="#">How it Works</a></li>
+        <li><a href="#">Contact Us</a></li>
+      </ul>
+    </nav>
+  </header>
+  <main>
+    <section class="hero">
+      <div class="hero-content">
+        <h2>Find Your Mentor, Become a Mentor</h2>
+        <p>Connect with peers for academic and personal support.</p>
+        <button>Join Now</button>
+      </div>
+      <div class="hero-image">
+        </div>
+    </section>
+    <section class="features">
+      <h2>Why Choose Us?</h2>
+      <div class="feature-card">
+        <h3>Personalized Matching</h3>
+        <p>Find the perfect mentor based on your needs.</p>
+      </div>
+      </section>
+  </main>
+  <footer>
+    <p>&copy; 2024 Peer Mentoring Platform</p>
+  </footer>
+  <script>
+    // Example: Smooth scrolling
+const links = document.querySelectorAll('a[href^="#"]');
+links.forEach(link => {
+  link.addEventListener('click', e => {
+    e.preventDefault();
+    const target = document.querySelector(link.getAttribute('href'));
+    target.scrollIntoView({ behavior: 'smooth' });
+  });
+});
+  </script>
+</body>
+</html>

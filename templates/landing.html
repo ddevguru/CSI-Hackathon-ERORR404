@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Shadows+Into+Light&display=swap" rel="stylesheet">
+    
+    <title>Mentor Hub</title>
+</head>
+<body>
+    <header class="header">
+        <img class=logo-img src="{{url_for('static',filename='WhatsApp_Image_2024-09-14_at_13.32.48_8c03c4be-removebg-preview.png')}}" alt="logo">
+        <a href="#" class="logo"><span class="span">Mentor</span>Hub</a>
+        <nav class="navbar">
+                <a href="#"Home>Home</a>
+                <a href="#Courses">Courses</a>
+                <a href="#About">About Us</a>
+             
+        </nav>
+        <a href="/login" class="login">Login/Sing-in</a>
+    </header>
+        
+    <section class="Home">
+        <div class="Home-content">
+            <h1>Connect<span class="span">Grow</span> Share</h1>
+            <p>Your Personalized Learning Journey
+
+                Mentor Hub is a dynamic platform designed to connect ambitious individuals with experienced mentors. Whether you're a seasoned professional seeking to share your expertise or a driven student looking to accelerate your growth, we offer a personalized learning experience tailored to your needs. <br>
+                <a href="./login"><button class="btn-1">Connect Now</button></a>
+                
+            </div>
+        </div>
+        <div class="img-box">
+            <script src="https://unpkg.com/@dotlottie/player-component@latest/dist/dotlottie-player.mjs" type="module"></script> 
+            <dotlottie-player src="https://lottie.host/ae2508bf-0487-4eaa-8028-702c61d7dc8b/A7ts7hgBh6.json" background="transparent" speed="1" style="width: 500px; height: 500px;" loop autoplay></dotlottie-player>
+        </div>
+    </section>
+
+    <section id="Courses" class="Courses"></section>
+        <div class="Courses-content">
+            <h2>Our <span class="span">Courses</span></h2>
+            <p>Discover a wide range of courses designed to help you achieve your goals. From foundational</p>
+            <div class="Courses-grid">
+                <ul>
+                    <li><i class='bx bxl-python' ></i><p></p></li>
+                    <li><i class='bx bxl-postgresql' ></i></li>
+                    <li><i class='bx bxl-javascript' ></i></li>
+                </ul>
+                
+            </div>
+        </div>
+    </section>
+
+
+
+    <section id="About" class="About">
+        <script src="https://unpkg.com/@dotlottie/player-component@latest/dist/dotlottie-player.mjs" type="module"></script> 
+
+    <dotlottie-player src="https://lottie.host/b2c82807-f2f4-43ae-a6ea-0eaa08527cbe/ApGUkmPfjU.json" background="transparent" speed="1" style="width: 500px; height: 500px;" loop autoplay></dotlottie-player>
+        <div class="About-content">
+            <h2 class="heading">About <span class="span">Us</span></h2>
+            <h3>Mentor <span class="span">Hub</span></h3>
+            <p>Find Your Mentor: Browse our extensive network of mentors across various fields and industries. Use our advanced search filters to find the perfect match based on your goals and interests.<br>
+                Connect and Learn: Engage in one-on-one mentorship sessions, access exclusive resources, and benefit from personalized guidance.<br>
+                Rate and Review: Share your experience and help others find the best mentors by rating and reviewing your mentors.<br>
+                Why Choose Mentor Hub?<br>
+                
+                Personalized Mentorship: Connect with mentors who truly understand your unique goals and challenges.<br>
+                Extensive Resource Library: Access a wealth of educational materials, articles, and workshops curated by experts.<br>
+                Supportive Community: Join a vibrant community of like-minded individuals who share your passion for learning and growth.<br>
+                Ready to embark on your mentorship journey? Join Mentor Hub today and unlock your full potential.</p>
+            <div class="btn-box"></p>
+            <a href="#Experience" class="btn-2">Experince</a>
+        </div>
+    </section>
+
+
+
+    <footer class="footer">
+        <div class="social">
+            <a href="#"><i class='bx bxl-instagram'></i></a>
+            <a href="www.linkedin.com/in/gaikwadarya"><i class='bx bxl-linkedin'></i></a>
+            <a href="#"><i class='bx bxl-twitter'></i></a>
+            <a href="#"><i class='bx bxl-facebook'></i></a>
+        </div>
+
+        <ul class="list">
+            <li><a href="#">FAQ</a></li>
+            <li><a href="#">Service</a></li>
+            <li><a href="#About">About</a></li>
+            <li><a href="#">Contact</a></li>
+            <li><a href="#">Privacy Policy</a></li>
+        </ul>
+        <p class="copyright">@ 2024 Mentor Hub | All Rights Reserved</p>
+
+    </footer>
+
+    
+</body>
+</html>

@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Student Dashboard</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            padding: 0;
+        }
+
+        h1 {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .section {
+            border: 2px solid #ccc;
+            padding: 20px;
+            margin-bottom: 20px;
+        }
+
+        .grid-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 20px;
+        }
+
+        .grid-container div {
+            border: 1px solid #ddd;
+            padding: 15px;
+            text-align: center;
+        }
+
+        .mentor-photo {
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            object-fit: cover;
+            margin-bottom: 10px;
+        }
+
+        ul {
+            list-style-type: none;
+            padding: 0;
+        }
+
+        ul li {
+            padding: 8px 0;
+            border-bottom: 1px solid #ddd;
+        }
+
+        ul li:last-child {
+            border-bottom: none;
+        }
+
+        a {
+            text-decoration: none;
+            color: #007bff;
+        }
+
+        a:hover {
+            text-decoration: underline;
+        }
+
+        .join-form {
+            display: none; /* Initially hidden */
+            margin-top: 20px;
+            padding: 15px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+        }
+
+        .join-form input, .join-form textarea {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 10px;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+        }
+
+        .join-form button {
+            padding: 10px 15px;
+            border: none;
+            border-radius: 5px;
+            background-color: #007bff;
+            color: #fff;
+            cursor: pointer;
+        }
+
+        .join-form button:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+    <h1>Welcome, {{ session['name'] }} (Student)</h1>
+
+    <!-- Mentor Joining Section -->
+    <div class="section">
+        <h2>Join Mentors</h2>
+        <div class="grid-container">
+            {% for mentor in mentors %}
+                <div>
+                    <img src="{{ url_for('uploaded_file', filename=mentor[8]) }}" alt="Profile Photo" class="mentor-photo">
+                    <h3>{{ mentor[1] }}</h3>
+                    <p>{{ mentor[7] }}</p>
+                    <button onclick="showJoinForm('{{ mentor[0] }}')">Join</button>
+                    <form id="join-form-{{ mentor[0] }}" class="join-form" method="POST" action="/request_join">
+                        <input type="hidden" name="mentor_id" value="{{ mentor[0] }}">
+                        <label for="reason">Reason for Joining:</label>
+                        <textarea name="reason" required></textarea>
+                        <button type="submit">Submit Request</button>
+                    </form>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+
+    <!-- Mentor Approval Section -->
+ <!-- Mentor Requests Section -->
+ <div class="section">
+    <h2>Mentor Request Status</h2>
+    <div class="grid-container">
+        {% for request in mentor_requests %}
+            <div class="grid-item">
+                <h3>Mentor: {{ request[1] }}</h3>
+                <p>Status: 
+                    {% if request[3] == 'approved' %}
+                        <span class="approve-status" style="color: green;">Approved</span>
+                    {% else %}
+                        <span class="pending-status" style="color: red;">Pending</span>
+                    {% endif %}
+                </p>
+            </div>
+        {% endfor %}
+    </div>
+</div>
+
+    <div class="section">
+        <h2>Study Materials</h2>
+        <ul>
+            {% for material in study_materials %}
+                <li><a href="{{ material[2] }}">{{ material[1] }}</a></li>
+            {% endfor %}
+        </ul>
+    </div>
+
+     <!-- Course Enrollment Section -->
+     <div class="section">
+        <h2>Available Courses</h2>
+        <div class="grid-container">
+            {% for course in courses %}
+                <div>
+                    <h3>{{ course[1] }}</h3>
+                    <button onclick="showJoinForm('{{ course[0] }}')">Join</button>
+                    <form id="join-form-{{ course[0] }}" class="join-form" method="POST" action="/request_course_join">
+                        <input type="hidden" name="course_id" value="{{ course[0] }}">
+                        <button type="submit">Submit Request</button>
+                    </form>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+
+    <!-- Course Request Status Section -->
+   <!-- Course Request Status Section -->
+<div class="section">
+    <h2>Course Request Status</h2>
+    <div class="grid-container">
+        {% for request in course_requests %}
+            <div>
+                <h3>Course: {{ request[1] }}</h3>
+                <p>Status: 
+                    {% if request[2] == 'approved' %}
+                        <span style="color: green;">Approved</span>
+                        <button class="study-button" onclick="startStudying('{{ request[0] }}')">Start Studying</button>
+                    {% else %}
+                        <span style="color: red;">Pending</span>
+                        <button class="study-button" disabled>Start Studying</button>
+                    {% endif %}
+                </p>
+            </div>
+        {% endfor %}
+    </div>
+</div>
+
+
+    <script>
+        function showJoinForm(mentorId) {
+            var form = document.getElementById('join-form-' + mentorId);
+            form.style.display = form.style.display === 'none' ? 'block' : 'none';
+        }
+
+        function showJoinForm(courseId) {
+            var form = document.getElementById('join-form-' + courseId);
+            form.style.display = form.style.display === 'none' ? 'block' : 'none';
+        }
+
+         function startStudying(courseId2) {
+        // Add your logic here to handle the course studying process
+        alert('Starting to study course with ID: ' + courseId2);
+    }
+    </script>
+</body>
+</html>

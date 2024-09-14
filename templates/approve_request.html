@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Approve Join Request</title>
+</head>
+<body>
+    <h1>Approve Join Request</h1>
+    
+    <p><strong>Student:</strong> {{ join_request[1] }}</p>
+    <p><strong>Reason for Joining:</strong> {{ join_request[2] }}</p>
+    
+    <form action="{{ url_for('approve_request', request_id=join_request[0]) }}" method="POST">
+        <button type="submit">Approve</button>
+    </form>
+</body>
+</html>

@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+   
+    <link rel="stylesheet" href="{{ url_for('static', filename='student.css') }}">
+
+    <link rel="stylesheet" href="https://unicons.iconscout.com/release/v4.0.0/css/line.css">
+
+    <title></title> 
+</head>
+<body>
+    <nav>
+        <div class="logo-name">
+            <div class="logo-image">
+                <img src="images/logo.png" alt="">
+            </div>
+
+            <span class="logo_name">MentorHub</span>
+        </div>
+
+        <div class="menu-items">
+            <ul class="nav-links">
+                <li><a href="/dashboard">
+                    <i class="uil uil-estate"></i>
+                    <span class="link-name">Dahsboard</span>
+                </a></li>
+           
+                <li><a href="/update_mentor_profile">
+                    <i class="uil uil-thumbs-up"></i>
+                    <span class="link-name">Update Profile</span>
+                </a></li>
+                <li><a href="/mentorpenreqli">
+                    <i class="uil uil-comments"></i>
+                    <span class="link-name">Pending Join Requests</span>
+                </a></li>
+                <li><a href="/aprovestudentli">
+                    <i class="uil uil-share"></i>
+                    <span class="link-name">Approved Join Requests</span>
+                </a></li>
+                <li><a href="/studentcourseaprovelist">
+                    <i class="uil uil-share"></i>
+                    <span class="link-name">Chat</span>
+                </a></li>
+            </ul>
+            
+            <ul class="logout-mode">
+                <li><a href="/logout">
+                    <i class="uil uil-signout"></i>
+                    <span class="link-name">Logout</span>
+                </a></li>
+
+                <li class="mode">
+                    <a href="#">
+                        <i class="uil uil-moon"></i>
+                    <span class="link-name">Dark Mode</span>
+                </a>
+
+                <div class="mode-toggle">
+                  <span class="switch"></span>
+                </div>
+            </li>
+            </ul>
+        </div>
+    </nav>
+
+    <section class="dashboard">
+        <div class="top">
+            <i class="uil uil-bars sidebar-toggle"></i>
+
+            <div class="search-box">
+                <i class="uil uil-search"></i>
+                <input type="text" placeholder="Search here...">
+            </div>
+            
+            <img src="images/profile.jpg" alt="">
+        </div>
+
+        <div class="dash-content">
+            
+
+            <div class="activity">
+                <div class="title">
+                    <i class="uil uil-clock-three"></i>
+                    <span class="text">Update Profile</span>
+                </div>
+                    <div class="activity-data">
+                        <form action="/update_profile" method="POST" enctype="multipart/form-data">
+                            <label for="name">Name:</label><br>
+                            <input type="text" name="name" value="{{ session['name'] }}" required>
+                            <br><br>
+                        
+                            <label for="bio">Bio:</label><br>
+                            <textarea name="bio" required>{{ session.get('bio', '') }}</textarea><br><br>
+                        
+                            <label for="profile_photo">Profile Photo:</label><br>
+                            <input type="file" name="profile_photo"><br><br>
+
+                            <label for="profile_photo">Phone Number:</label><br>
+                            <input type="text" name="number"><br><br>
+                        
+                            <button type="submit">Update Profile</button>
+                        </form>
+                    </div>
+            </div>
+        </div>
+    </section>
+
+    <script>
+        const body = document.querySelector("body"),
+      modeToggle = body.querySelector(".mode-toggle");
+      sidebar = body.querySelector("nav");
+      sidebarToggle = body.querySelector(".sidebar-toggle");
+
+        let getMode = localStorage.getItem("mode");
+        if(getMode && getMode ==="dark"){
+            body.classList.toggle("dark");
+        }
+
+        let getStatus = localStorage.getItem("status");
+        if(getStatus && getStatus ==="close"){
+            sidebar.classList.toggle("close");
+        }
+
+        modeToggle.addEventListener("click", () =>{
+            body.classList.toggle("dark");
+            if(body.classList.contains("dark")){
+                localStorage.setItem("mode", "dark");
+            }else{
+                localStorage.setItem("mode", "light");
+            }
+        });
+
+        sidebarToggle.addEventListener("click", () => {
+            sidebar.classList.toggle("close");
+            if(sidebar.classList.contains("close")){
+                localStorage.setItem("status", "close");
+            }else{
+                localStorage.setItem("status", "open");
+            }
+        })
+
+
+        function showJoinForm(mentorId) {
+            var form = document.getElementById('join-form-' + mentorId);
+            form.style.display = form.style.display === 'none' ? 'block' : 'none';
+        }
+
+        function showJoinForm(courseId) {
+            var form = document.getElementById('join-form-' + courseId);
+            form.style.display = form.style.display === 'none' ? 'block' : 'none';
+        }
+
+         function startStudying(courseId2) {
+        // Add your logic here to handle the course studying process
+        alert('Starting to study course with ID: ' + courseId2);
+    }
+    </script>
+</body>
+</html>

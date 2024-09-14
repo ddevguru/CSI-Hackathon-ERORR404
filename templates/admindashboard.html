@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <link rel="stylesheet" href="{{ url_for('static', filename='admin.css') }}">
+    <link rel="stylesheet" href="https://unicons.iconscout.com/release/v4.0.0/css/line.css">
+
+    <title>Admin Dashboard Panel</title> 
+</head>
+<body>
+    <nav>
+        <div class="logo-name">
+            <div class="logo-image">
+                <img src="images/logo.png" alt="">
+            </div>
+
+            <span class="logo_name">MentorHub</span>
+        </div>
+
+        <div class="menu-items">
+            <ul class="nav-links">
+                <li><a href="/dashboard">
+                    <i class="uil uil-estate"></i>
+                    <span class="link-name">Dahsboard</span>
+                </a></li>
+                <li><a href="/uploadcourseadmin">
+                    <i class="uil uil-files-landscapes"></i>
+                    <span class="link-name">Upload Study Material's</span>
+                </a></li>
+                <li><a href="/aproveacc">
+                    <i class="uil uil-chart"></i>
+                    <span class="link-name">Approve Accounts</span>
+                </a></li>
+                <li><a href="/updatecourseadmin">
+                    <i class="uil uil-thumbs-up"></i>
+                    <span class="link-name">Update Course</span>
+                </a></li>
+                <li><a href="#">
+                    <i class="uil uil-comments"></i>
+                    <span class="link-name">Lit of Study Material</span>
+                </a></li>
+                <li><a href="#">
+                    <i class="uil uil-share"></i>
+                    <span class="link-name">List Of Course</span>
+                </a></li>
+            </ul>
+            
+            <ul class="logout-mode">
+                <li><a href="/logout">
+                    <i class="uil uil-signout"></i>
+                    <span class="link-name">Logout</span>
+                </a></li>
+
+                <li class="mode">
+                    <a href="#">
+                        <i class="uil uil-moon"></i>
+                    <span class="link-name">Dark Mode</span>
+                </a>
+
+                <div class="mode-toggle">
+                  <span class="switch"></span>
+                </div>
+            </li>
+            </ul>
+        </div>
+    </nav>
+
+    <section class="dashboard">
+        <div class="top">
+            <i class="uil uil-bars sidebar-toggle"></i>
+
+            <div class="search-box">
+                <i class="uil uil-search"></i>
+                <input type="text" placeholder="Search here...">
+            </div>
+            
+            <img src="images/profile.jpg" alt="">
+        </div>
+
+        <div class="dash-content">
+            <div class="overview">
+                <div class="title">
+                    <i class="uil uil-tachometer-fast-alt"></i>
+                    <span class="text">Welcome, {{ session['name'] }} (Admin)</span>
+                </div>
+
+                <div class="boxes">
+                    <div class="box box1">
+                        <dotlottie-player src="https://lottie.host/cdfffaa3-d88a-4cef-afb7-549f3b2bb473/W28EJejXtk.json" 
+                        background="transparent" speed="1" style="width: 140px; height: 140px;" loop autoplay></dotlottie-player>
+                        <span class="text">Total Mentor's</span>
+                        <span class="number">50,120</span>
+                    </div>
+                    <div class="box box2">
+                        <dotlottie-player src="https://lottie.host/4eb70083-a04f-4e2e-baec-947b1a9fe750/h6dYsaYnye.json" 
+                        background="transparent" speed="1" style="width: 140px; height: 140px;" loop autoplay></dotlottie-player>
+                        <span class="text">Total Student's</span>
+                        <span class="number">20,120</span>
+                    </div>
+                    <div class="box box3">
+                        
+                        <dotlottie-player src="https://lottie.host/67b21cf2-e24a-49a8-a327-d35ec86d597f/5WxtObbaQw.json" 
+                        background="transparent" speed="1" style="width: 150px; height: 150px;" loop autoplay></dotlottie-player>
+                        <span class="text">Total Courses</span>
+                        <span class="number">10,120</span>
+                    </div>
+                    <div class="box box4">
+                        <dotlottie-player src="https://lottie.host/03029284-d2b6-4f4a-a503-a7b1edbaed5c/JEO0OkiWXK.json" 
+                        background="transparent" speed="1" style="width: 150px; height: 150px;" loop autoplay></dotlottie-player>
+                        <span class="text">Studied Material</span>
+                        <span class="number">10,120</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="activity">
+                <div class="title">
+                    <i class="uil uil-clock-three"></i>
+                    <span class="text">Course Approval Requests</span>
+                </div>
+                <table class="styled-table">
+                    <thead>
+                        <tr>
+                            <th>Request ID</th>
+                            <th>Course Name</th>
+                            <th>Student Name</th>
+                            <th>Status</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for request in course_requests %}
+                        <tr>
+                            <td>{{ request[1] }}</td>
+                            <td>{{ request[0] }}</td>
+                            <td>{{ request[2] }}</td>
+                            <td>
+                                {% if request[3] == 'approved' %}
+                                    <span class="status approved">Approved</span>
+                                {% else %}
+                                    <span class="status pending">Pending</span>
+                                {% endif %}
+                            </td>
+                            <td>
+                                <form action="{{ url_for('approve_course_request', request_id=request[0]) }}" method="POST">
+                                    <button type="submit" class="action-btn approve-btn">Approve</button>
+                                </form>
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+                
+                
+            </div>
+        </div>
+    </section>
+
+    <script>
+        const body = document.querySelector("body"),
+      modeToggle = body.querySelector(".mode-toggle");
+      sidebar = body.querySelector("nav");
+      sidebarToggle = body.querySelector(".sidebar-toggle");
+
+        let getMode = localStorage.getItem("mode");
+        if(getMode && getMode ==="dark"){
+            body.classList.toggle("dark");
+        }
+
+        let getStatus = localStorage.getItem("status");
+        if(getStatus && getStatus ==="close"){
+            sidebar.classList.toggle("close");
+        }
+
+        modeToggle.addEventListener("click", () =>{
+            body.classList.toggle("dark");
+            if(body.classList.contains("dark")){
+                localStorage.setItem("mode", "dark");
+            }else{
+                localStorage.setItem("mode", "light");
+            }
+        });
+
+        sidebarToggle.addEventListener("click", () => {
+            sidebar.classList.toggle("close");
+            if(sidebar.classList.contains("close")){
+                localStorage.setItem("status", "close");
+            }else{
+                localStorage.setItem("status", "open");
+            }
+        })
+    </script>
+    <script src="https://unpkg.com/@dotlottie/player-component@latest/dist/dotlottie-player.mjs" type="module"></script> 
+
+</body>
+</html>

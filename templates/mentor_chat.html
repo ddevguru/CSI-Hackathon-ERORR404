@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{{ url_for('static', filename='student.css') }}">
+    <title>Mentor Chat</title>
+</head>
+<body>
+    <nav>
+     
+    </nav>
+
+    <section class="chat-section">
+        <div class="chat-container">
+            <div class="student-list">
+                <h2>Chats with Students</h2>
+                <ul id="student-list">
+                 
+                </ul>
+            </div>
+
+            <div class="chat-window">
+                <h2>Chat with <span id="current-student">Student Name</span></h2>
+                <div id="chat-box">
+          
+                </div>
+                <textarea id="message-input" placeholder="Type your message..."></textarea>
+                <button onclick="sendMessage()">Send</button>
+            </div>
+        </div>
+    </section>
+
+    <script>
+        let currentStudentId = null;
+
+        function fetchChats() {
+            fetch('/mentor_chats')
+                .then(response => response.json())
+                .then(data => {
+                    const studentList = document.getElementById('student-list');
+                    data.forEach(chat => {
+                        const listItem = document.createElement('li');
+                        listItem.textContent = chat.student_name; 
+                        listItem.onclick = () => startChat(chat.student_id);
+                        studentList.appendChild(listItem);
+                    });
+                });
+        }
+
+        function startChat(studentId) {
+            currentStudentId = studentId;
+            document.getElementById('current-student').textContent = studentId; 
+            
+          
+            fetch(`/get_chat?student_id=${studentId}`)
+                .then(response => response.json())
+                .then(messages => {
+                    const chatBox = document.getElementById('chat-box');
+                    chatBox.innerHTML = '';
+                    messages.forEach(msg => {
+                        const messageDiv = document.createElement('div');
+                        messageDiv.textContent = msg.message; 
+                        chatBox.appendChild(messageDiv);
+                    });
+                });
+        }
+
+        function sendMessage() {
+            const message = document.getElementById('message-input').value;
+            fetch('/send_message', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    student_id: currentStudentId,
+                    message: message
+                })
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.status === 'success') {
+                    document.getElementById('message-input').value = '';
+                    startChat(currentStudentId); 
+                }
+            });
+        }
+
+        fetchChats();
+    </script>
+</body>
+</html>

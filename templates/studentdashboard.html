@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<!--=== Coding by CodingLab | www.codinglabweb.com === -->
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <!----======== CSS ======== -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='student.css') }}">
+     
+    <!----===== Iconscout CSS ===== -->
+    <link rel="stylesheet" href="https://unicons.iconscout.com/release/v4.0.0/css/line.css">
+
+    <title></title> 
+</head>
+<body>
+    <nav>
+        <div class="logo-name">
+            <div class="logo-image">
+                <img src="images/logo.png" alt="">
+            </div>
+
+            <span class="logo_name">MentorHub</span>
+        </div>
+
+        <div class="menu-items">
+            <ul class="nav-links">
+                <li><a href="/dashboard">
+                    <i class="uil uil-estate"></i>
+                    <span class="link-name">Dahsboard</span>
+                </a></li>
+                <li><a href="/studentmentorlist">
+                    <i class="uil uil-files-landscapes"></i>
+                    <span class="link-name">Mentor's</span>
+                </a></li>
+                <li><a href="/studentmentorsrequest">
+                    <i class="uil uil-chart"></i>
+                    <span class="link-name">Mentors Request Status</span>
+                </a></li>
+                <li><a href="/studymateriallist">
+                    <i class="uil uil-thumbs-up"></i>
+                    <span class="link-name">Study Materials</span>
+                </a></li>
+                <li><a href="/studentcourselist">
+                    <i class="uil uil-comments"></i>
+                    <span class="link-name">Available Courses</span>
+                </a></li>
+                <li><a href="/studentcourseaprovelist">
+                    <i class="uil uil-share"></i>
+                    <span class="link-name">Course Request Status</span>
+                </a></li>
+            </ul>
+            
+            <ul class="logout-mode">
+                <li><a href="/logout">
+                    <i class="uil uil-signout"></i>
+                    <span class="link-name">Logout</span>
+                </a></li>
+
+                <li class="mode">
+                    <a href="#">
+                        <i class="uil uil-moon"></i>
+                    <span class="link-name">Dark Mode</span>
+                </a>
+
+                <div class="mode-toggle">
+                  <span class="switch"></span>
+                </div>
+            </li>
+            </ul>
+        </div>
+    </nav>
+
+    <section class="dashboard">
+        <div class="top">
+            <i class="uil uil-bars sidebar-toggle"></i>
+
+            <div class="search-box">
+                <i class="uil uil-search"></i>
+                <input type="text" placeholder="Search here...">
+            </div>
+            
+            <img src="images/profile.jpg" alt="">
+        </div>
+
+        <div class="dash-content">
+            <div class="overview">
+                <div class="title">
+                    <i class="uil uil-tachometer-fast-alt"></i>
+                    <span class="text">Welcome, {{ session['name'] }} (Student)</span>
+                </div>
+
+                <div class="boxes">
+                    <div class="box box1">
+                        <dotlottie-player src="https://lottie.host/cdfffaa3-d88a-4cef-afb7-549f3b2bb473/W28EJejXtk.json" 
+                        background="transparent" speed="1" style="width: 140px; height: 140px;" loop autoplay></dotlottie-player>
+                        <span class="text">Total Mentor's</span>
+                        <span class="number">50,120</span>
+                    </div>
+                  
+                    <div class="box box3">
+                        
+                        <dotlottie-player src="https://lottie.host/67b21cf2-e24a-49a8-a327-d35ec86d597f/5WxtObbaQw.json" 
+                        background="transparent" speed="1" style="width: 150px; height: 150px;" loop autoplay></dotlottie-player>
+                        <span class="text">Total Courses</span>
+                        <span class="number">10,120</span>
+                    </div>
+                    <div class="box box4">
+                        <dotlottie-player src="https://lottie.host/03029284-d2b6-4f4a-a503-a7b1edbaed5c/JEO0OkiWXK.json" 
+                        background="transparent" speed="1" style="width: 150px; height: 150px;" loop autoplay></dotlottie-player>
+                        <span class="text">Studied Material</span>
+                        <span class="number">10,120</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="activity">
+                <div class="title">
+                    <i class="uil uil-clock-three"></i>
+                    <span class="text">Course Request Status</span>
+                </div>
+
+                
+                
+                  
+                    <div class="activity-data">
+                        <table class="styled-table">
+                            <thead>
+                            <tr>
+                           
+                            <th><div class="data names"><span class="data-title">Course </span></div></th>
+                           
+                            <th><div class="data email"><span class="data-title">Status</span></div></th>
+                        
+                        </tr>
+                        </thead>
+                        <tbody>
+                        {% for request in course_requests %}
+                        <tr>
+                           
+                            <td><div class="data names"><span class="data-list">{{ request[1] }}</span></div></td>
+
+                            <td><div class="data email"><span class="data-list">{% if request[2] == 'approved' %}
+                                <span style="color: green;">Approved</span>
+                                <button class="study-button" onclick="startStudying('{{ request[0] }}')">Start Studying</button>
+                            {% else %}
+                                <span style="color: red;">Pending</span>
+                                <button class="study-button" disabled>Start Studying</button>
+                            {% endif %}
+                           
+                            </span></div> </td>
+                       
+                       
+                        </tr>
+                        {% endfor %}
+                        </tbody>
+                    </div>
+                </table>
+               
+            </div>
+        </div>
+    </section>
+
+    <script>
+        const body = document.querySelector("body"),
+      modeToggle = body.querySelector(".mode-toggle");
+      sidebar = body.querySelector("nav");
+      sidebarToggle = body.querySelector(".sidebar-toggle");
+
+        let getMode = localStorage.getItem("mode");
+        if(getMode && getMode ==="dark"){
+            body.classList.toggle("dark");
+        }
+
+        let getStatus = localStorage.getItem("status");
+        if(getStatus && getStatus ==="close"){
+            sidebar.classList.toggle("close");
+        }
+
+        modeToggle.addEventListener("click", () =>{
+            body.classList.toggle("dark");
+            if(body.classList.contains("dark")){
+                localStorage.setItem("mode", "dark");
+            }else{
+                localStorage.setItem("mode", "light");
+            }
+        });
+
+        sidebarToggle.addEventListener("click", () => {
+            sidebar.classList.toggle("close");
+            if(sidebar.classList.contains("close")){
+                localStorage.setItem("status", "close");
+            }else{
+                localStorage.setItem("status", "open");
+            }
+        })
+
+
+        function showJoinForm(mentorId) {
+            var form = document.getElementById('join-form-' + mentorId);
+            form.style.display = form.style.display === 'none' ? 'block' : 'none';
+        }
+
+        function showJoinForm(courseId) {
+            var form = document.getElementById('join-form-' + courseId);
+            form.style.display = form.style.display === 'none' ? 'block' : 'none';
+        }
+
+         function startStudying(courseId2) {
+        // Add your logic here to handle the course studying process
+        alert('Starting to study course with ID: ' + courseId2);
+    }
+    </script>
+    <script src="https://unpkg.com/@dotlottie/player-component@latest/dist/dotlottie-player.mjs" type="module"></script> 
+</body>
+</html>
